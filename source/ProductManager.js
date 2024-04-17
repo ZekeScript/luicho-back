@@ -1,28 +1,26 @@
 class ProductManager {
-  //iniciar array de productos como array vacio
+  //iniciar array de productos vacio
   constructor() {
     this.products = [];
   }
 
-  //generacion de id unico
+  //generar id unico
   generateUniqueId() {
     return Math.random().toString(36).substr(2, 9);
   }
 
-  //agregacion de productos al array
+  //agregar producto
   addProduct(title, description, price, thumbnail, code, stock) {
     const product = {
-      //campos por convencion
       title,
       description,
       price,
       thumbnail,
       code,
       stock,
-      //hardcodeo el primer id para probar el funcionamiento de la busqueda por id posteriormente
       id: this.products.length > 0 ? this.generateUniqueId() : 1,
     };
-    //evito la carga repetida de productos comparando el codigo del producto
+    //evitar carga repetida
     if (this.products.some((product) => product.code === code)) {
       return `Ya existe un producto con ese codigo`;
     } else {
@@ -30,12 +28,12 @@ class ProductManager {
     }
   }
 
-  //retorno lista de productos
+  //listar productos
   getProducts() {
     return this.products;
   }
 
-  //busqueda de productos mediante id
+  //busqueda x id
   getProductById(searchedId) {
     return (
       this.products.find((product) => product.id === searchedId) ||
@@ -44,13 +42,13 @@ class ProductManager {
   }
 }
 
-//instanciacion de la clase padre
+//instancia clase padre
 const prodMgr = new ProductManager();
 
-//test de creacion de lista como array vacio
+//test array vacio
 console.log(prodMgr.getProducts());
 
-//test de carga de productos
+//test agregar producto
 prodMgr.addProduct(
   "producto prueba 1",
   "Este es un producto prueba",
@@ -77,11 +75,11 @@ prodMgr.addProduct(
   25
 );
 
-//test listado de productos
+//test listada de productos
 console.log(prodMgr.getProducts());
 
-//test busqueda por id failure path
+//test busqueda x id; failure path
 console.log(prodMgr.getProductById(0));
 
-//test busqueda por id success path
+//test busqueda x id; success path
 console.log(prodMgr.getProductById(1));
