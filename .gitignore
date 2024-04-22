@@ -1,0 +1,36 @@
+# Carpeta de dependencias generadas
+node_modules/
+
+# Carpeta de construcción generada en la compilación
+build/
+dist/
+
+# Archivos temporales generados por los editores
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+*.swo
+*.swp
+*~
+
+# Archivos de caché o registros
+.cache/
+logs/
+logs.txt
+
+# Archivos de configuración específicos del sistema
+.DS_Store
+Thumbs.db
+.eslintrc
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Carpeta de respaldos
+backup/
+backups/
