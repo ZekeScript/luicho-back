@@ -22,6 +22,7 @@ class ProductManager {
       } else {
         const updatedProducts = [...products, newProduct]
         await this.writeProducts(updatedProducts)
+        return newProduct
       }
     } catch (error) {
       console.log(error)
@@ -79,12 +80,13 @@ class ProductManager {
   // Modica un producto por su ID usando los datos de entrada
   async updateProduct (id, updatedFields) {
     try {
-      const products = this.getProducts()
+      const products = await this.getProducts()
       const productIndex = products.findIndex(product => product.id === id)
       if (productIndex === -1) {
-        throw new Error('Product not found')
+        console.log('Product not found')
       }
       products[productIndex] = { ...products[productIndex], ...updatedFields }
+      await this.writeProducts(products)
       return products[productIndex]
     } catch (error) {
       console.log(error)
@@ -94,7 +96,7 @@ class ProductManager {
   // Elimina un producto del array de productos usando su ID
   async deleteProduct (id) {
     try {
-      const products = this.getProducts()
+      const products = await this.getProducts()
       const newProducts = products.filter(product => product.id !== id)
       await this.writeProducts(newProducts)
       return newProducts
@@ -102,46 +104,44 @@ class ProductManager {
       console.log(error)
     }
   }
+
+  async runTest () {
+    try {
+      // Test: Array vacío de productos
+      console.log(await productManager.getProducts())
+
+      // Test: Agregar productos
+      await productManager.addProduct({
+        title: 'Producto de prueba',
+        description: 'Este es un producto de prueba',
+        price: 200,
+        thumbnail: 'Sin imagen',
+        code: 'abc123',
+        stock: 25
+      })
+
+      // Test: Listar productos
+      console.log(await productManager.getProducts())
+
+      // Test: Búsqueda por ID (fallida)
+      console.log(await productManager.getProductById(0))
+
+      // Test: Modificar datos de un producto
+      await productManager.updateProduct(1, { price: 250 })
+
+      // Test: Búsqueda por ID (exitosa)
+      console.log(await productManager.getProductById(1))
+
+      // Text: Borrar un producto
+      await productManager.deleteProduct(1)
+
+      console.log(await productManager.getProducts())
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 // Instancia de la clase ProductManager
-const productManager = new ProductManager()
-
-// Test: Array vacío de productos
-console.log(productManager.getProducts())
-
-// Test: Agregar productos
-productManager.addProduct(
-  'producto prueba 1',
-  'Este es un producto prueba',
-  200,
-  'Sin imagen',
-  'abc123',
-  25
-)
-// Test: Carga repetida
-productManager.addProduct(
-  'producto prueba 1',
-  'Este es un producto prueba',
-  200,
-  'Sin imagen',
-  'abc123',
-  25
-)
-productManager.addProduct(
-  'producto prueba 2',
-  'Este es un producto prueba',
-  200,
-  'Sin imagen',
-  'def456',
-  25
-)
-
-// Test: Listar productos
-console.log(productManager.getProducts())
-
-// Test: Búsqueda por ID (fallida)
-console.log(productManager.getProductById(0))
-
-// Test: Búsqueda por ID (éxito)
-console.log(productManager.getProductById(1))
+const productManager = new ProductManager('./products.json')
+productManager.runTest()
