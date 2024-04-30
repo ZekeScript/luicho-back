@@ -14,9 +14,10 @@
     "standard": "^17.1.0"
   },
   "name": "luicho-back",
-  "description": "",
+  "description": "Este proyecto se usara para la entrega de los desafios del curso de back-end",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
+  "type": "module",
   "dependencies": {
     "acorn": "^8.11.3",
     "acorn-jsx": "^5.3.2",
@@ -242,6 +243,7 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
