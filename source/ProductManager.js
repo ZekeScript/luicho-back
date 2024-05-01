@@ -1,4 +1,4 @@
-const fs = require('fs')
+import { existsSync, promises } from 'fs'
 
 class ProductManager {
   // Inicializa el array de productos vacío
@@ -9,8 +9,8 @@ class ProductManager {
   // Devuelve todos los productos
   async getProducts () {
     try {
-      if (fs.existsSync(this.path)) {
-        const productsData = await fs.promises.readFile(this.path, 'utf8')
+      if (existsSync(this.path)) {
+        const productsData = await promises.readFile(this.path, 'utf8')
         return JSON.parse(productsData)
       } else return []
     } catch (error) {
@@ -44,7 +44,7 @@ class ProductManager {
 
   async writeProducts (products) {
     try {
-      await fs.promises.writeFile(this.path, JSON.stringify(products))
+      await promises.writeFile(this.path, JSON.stringify(products))
     } catch (error) {
       console.log(error)
     }
