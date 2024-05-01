@@ -1,1 +1,38 @@
-[{"title":"Producto de prueba","description":"Este es un producto de prueba","price":250,"thumbnail":"Sin imagen","code":"abc","stock":25,"id":"m4upibf57"},{"title":"Producto de prueba","description":"Este es un producto de prueba","price":200,"thumbnail":"Sin imagen","code":"def","stock":25,"id":"fgysqmujm"},{"title":"Producto de prueba","description":"Este es un producto de prueba","price":200,"thumbnail":"Sin imagen","code":"jkl","stock":25,"id":"dtahtlswy"},{"title":"Producto de prueba","description":"Este es un producto de prueba","price":200,"thumbnail":"Sin imagen","code":"mno","stock":25,"id":"gutbidans"}]
+[
+  {
+    "title": "Producto de prueba",
+    "description": "Este es un producto de prueba",
+    "price": 250,
+    "thumbnail": "Sin imagen",
+    "code": "abc",
+    "stock": 25,
+    "id": "m4upibf57"
+  },
+  {
+    "title": "Producto de prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "def",
+    "stock": 25,
+    "id": "fgysqmujm"
+  },
+  {
+    "title": "Producto de prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "jkl",
+    "stock": 25,
+    "id": "dtahtlswy"
+  },
+  {
+    "title": "Producto de prueba",
+    "description": "Este es un producto de prueba",
+    "price": 200,
+    "thumbnail": "Sin imagen",
+    "code": "mno",
+    "stock": 25,
+    "id": "gutbidans"
+  }
+]
