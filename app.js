@@ -1,40 +1,44 @@
 import express from 'express'
-import { products } from './source/products.js'
+import { products as productList } from './source/products.js'
 
+// Crear una instancia de Express
 const app = express()
 
-app.get('/home', (req, res) => {
-  res.send('<>Hola mundo</>')
-  // res.json(products)
-  // res.redirect('/home)
-  // res.render()
-  // res.status(404).json({ msg: 'Error, no podes ingresar' })
+// Ruta para la página de inicio
+app.get('/home', (request, response) => {
+  // Devolver un mensaje de saludo simple
+  response.send('<>Hello world</>')
+  // Otras opciones como res.json(products), res.redirect('/home), res.render(), res.status(404).json({ msg: 'Error, no puedes ingresar' })
 })
 
-app.get('/products', (req, res) => {
-  // res.json(products)
-  // console.log(req)
-  // query
-  const { value } = req.query
-  console.log(value)
-  const productsFilter = products.filter(p => p.price > parseInt(value))
-  res.json(productsFilter)
+// Ruta para obtener productos basados en el valor de consulta
+app.get('/products', (request, response) => {
+  // Obtener el valor de la consulta
+  const { minPrice } = request.query
+  const minPriceValue = parseInt(minPrice)
+  // Filtrar productos basados en el precio
+  const filteredProducts = productList.filter(product => product.price > minPriceValue)
+  // Devolver los productos filtrados
+  response.json(filteredProducts)
 })
 
-app.get('/product/:id', (req, res) => {
-  // params
-  const { id } = req.params
-  console.log(id)
-  const prod = products.find(p => p.id === parseInt(id))
-  if (prod) {
-    res.json(prod)
-  } else {
-    res.json({ msg: 'Product not found' })
-  }
+// Ruta para obtener un producto por su ID
+app.get('/product/:id', (request, response) => {
+  // Obtener el ID del parámetro de la URL
+  const { id } = request.params
+  const productId = parseInt(id)
+  // Buscar el producto por su ID
+  const product = productList.find(product => product.id === productId)
+  // Devolver el producto si se encuentra, de lo contrario, devolver un mensaje
+  product ? response.json(product) : response.json({ msg: 'Product not found' })
 })
 
 // body
 
+// Puerto en el que el servidor escucha las solicitudes
 const PORT = 8080
 
-app.listen(PORT, () => console.log(`Server ok ${PORT}`))
+// Iniciar el servidor
+app.listen(PORT, () => {
+  console.log(`Server OK on port ${PORT}`)
+})

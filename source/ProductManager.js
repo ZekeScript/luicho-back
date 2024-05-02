@@ -1,6 +1,7 @@
 import { existsSync, promises } from 'fs'
+import { vs as uuidv4 } from 'uuid'
 
-class ProductManager {
+export default class ProductManager {
   // Inicializa el array de productos vacío
   constructor (path) {
     this.path = path
@@ -9,10 +10,9 @@ class ProductManager {
   // Devuelve todos los productos
   async getProducts () {
     try {
-      if (existsSync(this.path)) {
-        const productsData = await promises.readFile(this.path, 'utf8')
-        return JSON.parse(productsData)
-      } else return []
+      return existsSync(this.path)
+        ? JSON.parse(await promises.readFile(this.path, 'utf8'))
+        : []
     } catch (error) {
       console.log(error)
     }
@@ -21,9 +21,11 @@ class ProductManager {
   // Agrega un producto al array de productos
   async addProduct (product) {
     try {
+      const newProduct = {
+        id: uuidv4(),
+        ...product
+      }
       const products = await this.getProducts()
-      const id = this.generateUniqueId()
-      const newProduct = { ...product, id }
       // Evita la carga de productos con códigos duplicados
       if (products.some((existingProduct) => existingProduct.code === newProduct.code)) {
         return 'Ya existe un producto con ese codigo'
@@ -35,11 +37,6 @@ class ProductManager {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  // Genera un ID único para los productos
-  generateUniqueId () {
-    return Math.random().toString(36).slice(2, 11)
   }
 
   async writeProducts (products) {
@@ -89,91 +86,3 @@ class ProductManager {
     }
   }
 }
-
-// Instancia de la clase ProductManager
-const productManager = new ProductManager('./products.json')
-
-const product1 = {
-  title: 'Producto de prueba',
-  description: 'Este es un producto de prueba',
-  price: 200,
-  thumbnail: 'Sin imagen',
-  code: 'abc',
-  stock: 25
-}
-const product2 = {
-  title: 'Producto de prueba',
-  description: 'Este es un producto de prueba',
-  price: 200,
-  thumbnail: 'Sin imagen',
-  code: 'def',
-  stock: 25
-}
-const product3 = {
-  title: 'Producto de prueba',
-  description: 'Este es un producto de prueba',
-  price: 200,
-  thumbnail: 'Sin imagen',
-  code: 'ghi',
-  stock: 25
-}
-const product4 = {
-  title: 'Producto de prueba',
-  description: 'Este es un producto de prueba',
-  price: 200,
-  thumbnail: 'Sin imagen',
-  code: 'jkl',
-  stock: 25
-}
-const product5 = {
-  title: 'Producto de prueba',
-  description: 'Este es un producto de prueba',
-  price: 200,
-  thumbnail: 'Sin imagen',
-  code: 'mno',
-  stock: 25
-}
-
-const test = async () => {
-  // Test: Array vacío de productos
-  console.log('Test: Array vacío de productos')
-  console.log(await productManager.getProducts())
-
-  // Test: Agregar productos
-  await productManager.addProduct(product1)
-  await productManager.addProduct(product2)
-  await productManager.addProduct(product3)
-  await productManager.addProduct(product4)
-  await productManager.addProduct(product5)
-
-  // Obtener ids
-  const products = await productManager.getProducts()
-  const firstId = products[0].id
-  const secondId = products[1].id
-  const thirdId = products[2].id
-
-  // Test: Listar productos
-  console.log('Test: Listar productos')
-  console.log(await productManager.getProducts())
-
-  // Test: Búsqueda por ID (fallida)
-  console.log('Test: Búsqueda por ID (fallida)')
-  console.log(await productManager.getProductById(0))
-
-  // Test: Modificar datos de un producto
-  console.log('Test: Modificar datos de un producto')
-  await productManager.updateProduct(firstId, { description: 'Este es un producto a sido modificado' })
-
-  // Test: Búsqueda por ID (exitosa)
-  console.log('Test: Búsqueda por ID (exitosa)')
-  console.log(await productManager.getProductById(secondId))
-
-  // Text: Borrar un producto
-  console.log('Text: Borrar un producto')
-  await productManager.deleteProduct(thirdId)
-
-  console.log('Test: Listar productos')
-  console.log(await productManager.getProducts())
-}
-
-test()
