@@ -1,39 +1,82 @@
 import express from 'express'
-import { products as productList } from './source/products.js'
+import ProductManager from './source/ProductManager.js'
+
+const productManager = new ProductManager('./products.json')
 
 // Crear una instancia de Express
 const app = express()
 
-// Ruta para la página de inicio
-app.get('/home', (request, response) => {
-  // Devolver un mensaje de saludo simple
-  response.send('<>Hello world</>')
-  // Otras opciones como res.json(products), res.redirect('/home), res.render(), res.status(404).json({ msg: 'Error, no puedes ingresar' })
-})
+app.use(express.json())
 
 // Ruta para obtener productos basados en el valor de consulta
-app.get('/products', (request, response) => {
-  // Obtener el valor de la consulta
-  const { minPrice } = request.query
-  const minPriceValue = parseInt(minPrice)
-  // Filtrar productos basados en el precio
-  const filteredProducts = productList.filter(product => product.price > minPriceValue)
-  // Devolver los productos filtrados
-  response.json(filteredProducts)
+app.get('/products', async (request, response) => {
+  try {
+    const productList = await productManager.getProducts()
+    response.status(200).json(productList)
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
 })
 
-// Ruta para obtener un producto por su ID
-app.get('/product/:id', (request, response) => {
-  // Obtener el ID del parámetro de la URL
-  const { id } = request.params
-  const productId = parseInt(id)
-  // Buscar el producto por su ID
-  const product = productList.find(product => product.id === productId)
-  // Devolver el producto si se encuentra, de lo contrario, devolver un mensaje
-  product ? response.json(product) : response.json({ msg: 'Product not found' })
+app.post('/products', async (request, response) => {
+  try {
+    const productList = await productManager.addProduct(request.body)
+    response.status(201).json(productList)
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
 })
 
-// body
+app.get('/products', async (request, response) => {
+  try {
+    const { limit } = request.query
+    const limitValue = parseInt(limit)
+    const productList = await productManager.getProducts()
+    console.log(productList.slice(0, 2))
+    const limitedProducts = (productList.length > limitValue)
+      ? productList.slice(0, limitValue)
+      : productList
+    response.status(201).json(limitedProducts)
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
+})
+
+app.get('/products/:productId', async (request, response) => {
+  try {
+    const { productId } = request.params
+    const productSearched = await productManager.getProductById(productId)
+    productSearched
+      ? response.status(201).json(productSearched)
+      : response.status(404).json({ msg: 'Product not found' })
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
+})
+
+app.put('/products/:productId', async (request, response) => {
+  try {
+    const { productId } = request.params
+    const updatedProduct = await productManager.updateProduct(productId, request.body)
+    updatedProduct
+      ? response.status(201).json(updatedProduct)
+      : response.status(404).json({ msg: 'Error updating product' })
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
+})
+
+app.delete('/products/:productId', async (request, response) => {
+  try {
+    const { productId } = request.params
+    const newProductList = await productManager.deleteProduct(productId)
+    newProductList
+      ? response.status(201).json({ msg: `Product id:${productId} deleted successfully` })
+      : response.status(404).json({ msg: 'Error delete product' })
+  } catch (error) {
+    response.status(500).json({ msg: error.message })
+  }
+})
 
 // Puerto en el que el servidor escucha las solicitudes
 const PORT = 8080

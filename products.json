@@ -1,0 +1,47 @@
+[
+  {
+    "id": "6c70707d-daf8-4367-9c89-054560f9856e",
+    "title": "Aros colgante piedra blanca",
+    "description": "Aros de acero dorado con piedra blanca",
+    "price": 1200,
+    "thumbnail": "Sin imagen",
+    "code": "abc",
+    "stock": 2
+  },
+  {
+    "id": "3adbbf5b-0585-41d6-83e7-5223494a1f22",
+    "title": "Aros colgante piedra transparente",
+    "description": "Aros de acero dorado piedra transparente",
+    "price": 1200,
+    "thumbnail": "Sin imagen",
+    "code": "def",
+    "stock": 2
+  },
+  {
+    "id": "bcfc356d-0021-4667-ba9f-8f08cf661b81",
+    "title": "Aro colgante doble",
+    "description": "Aros colgantes doble dije corazón de acero blanco",
+    "price": 3500,
+    "thumbnail": "Sin imagen",
+    "code": "ghi",
+    "stock": 2
+  },
+  {
+    "id": "802affac-23a6-4828-a384-ac8a97b740bb",
+    "title": "Pulsera dijes",
+    "description": "Pulsera acero blanco con dijes de perritos",
+    "price": 5000,
+    "thumbnail": "Sin imagen",
+    "code": "jkl",
+    "stock": 2
+  },
+  {
+    "id": "a14a45f5-f4c7-4e9f-9c03-aabe0bb15512",
+    "title": "Aros colgantes strass",
+    "description": "Aros colgantes con dije corazón de strass",
+    "price": 4500,
+    "thumbnail": "Sin imagen",
+    "code": "mno",
+    "stock": 2
+  }
+]
