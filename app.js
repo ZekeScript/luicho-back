@@ -10,13 +10,24 @@ const app = express()
 // Middleware para analizar las solicitudes JSON
 app.use(express.json())
 
-// Ruta para obtener productos basados en el valor de consulta
+// Ruta para obtener un número limitado de productos
 app.get('/products', async (request, response) => {
   try {
+    // Extraer el límite de los parámetros de consulta
+    const { limit } = request.query
     // Obtener todos los productos
     const productList = await productManager.getProducts()
-    // Enviar respuesta con código de estado 200 y lista de productos
-    response.status(200).json(productList)
+    // Verificar si se proporcionó un límite y si es un número válido
+    if (limit !== undefined && !isNaN(parseInt(limit))) {
+      const limitValue = parseInt(limit)
+      // Limitar el número de productos según limitValue
+      const limitedProducts = productList.slice(0, limitValue)
+      // Enviar respuesta con código de estado 200 y lista de productos limitada
+      response.status(200).json(limitedProducts)
+    } else {
+      // Si no se proporciona un límite, o el límite no es un número válido, devolver todos los productos
+      response.status(200).json(productList)
+    }
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
     response.status(500).json({ msg: error.message })
@@ -30,27 +41,6 @@ app.post('/products', async (request, response) => {
     const productList = await productManager.addProduct(request.body)
     // Enviar respuesta con código de estado 201 y lista de productos actualizada
     response.status(201).json(productList)
-  } catch (error) {
-    // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
-  }
-})
-
-// Ruta para obtener un número limitado de productos
-app.get('/products', async (request, response) => {
-  try {
-    // Extraer el límite de los parámetros de consulta
-    const { limit } = request.query
-    const limitValue = parseInt(limit)
-    // Obtener todos los productos
-    const productList = await productManager.getProducts()
-    // Limitar el número de productos según limitValue
-    console.log(productList.slice(0, 2))
-    const limitedProducts = (productList.length > limitValue)
-      ? productList.slice(0, limitValue)
-      : productList
-    // Enviar respuesta con código de estado 201 y lista de productos limitada
-    response.status(201).json(limitedProducts)
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
     response.status(500).json({ msg: error.message })
