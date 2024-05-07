@@ -29,6 +29,10 @@ router.get('/', async (request, response) => {
   }
 })
 
+// TODO:
+//* Status true por defecto
+//* Todos los campos obligatorios excepto thumbnails
+
 // Ruta para agregar un nuevo producto
 router.post('/', async (request, response) => {
   try {
