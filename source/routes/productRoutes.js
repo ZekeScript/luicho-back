@@ -1,12 +1,14 @@
 import { Router } from 'express'
+import { __dirname } from '../path.js'
 import ProductManager from '../managers/ProductManager.js'
+import { productValidator } from '../middlewares/productValidator.js'
 const router = Router()
 
 // Crear una instancia de ProductManager para gestionar los datos de productos
-const productManager = new ProductManager('./source/data/products.json')
+const productManager = new ProductManager(`${__dirname}/data/products.json`)
 
 // Ruta para obtener un número limitado de productos
-router.get('/', async (request, response) => {
+router.get('/', async (request, response, next) => {
   try {
     // Extraer el límite de los parámetros de consulta
     const { limit } = request.query
@@ -25,16 +27,12 @@ router.get('/', async (request, response) => {
     }
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
+    next(error)
   }
 })
 
-// TODO:
-//* Status true por defecto
-//* Todos los campos obligatorios excepto thumbnails
-
 // Ruta para agregar un nuevo producto
-router.post('/', async (request, response) => {
+router.post('/', productValidator, async (request, response, next) => {
   try {
     // Agregar nuevo producto desde el cuerpo de la solicitud
     const productList = await productManager.addProduct(request.body)
@@ -42,12 +40,12 @@ router.post('/', async (request, response) => {
     response.status(201).json(productList)
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
+    next(error)
   }
 })
 
 // Ruta para obtener un producto por ID
-router.get('/:productId', async (request, response) => {
+router.get('/:productId', async (request, response, next) => {
   try {
     // Extraer el ID del producto de los parámetros de URL
     const { productId } = request.params
@@ -59,12 +57,12 @@ router.get('/:productId', async (request, response) => {
       : response.status(404).json({ msg: 'Product not found' })
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
+    next(error)
   }
 })
 
 // Ruta para actualizar un producto
-router.put('/:productId', async (request, response) => {
+router.put('/:productId', async (request, response, next) => {
   try {
     // Extraer el ID del producto de los parámetros de URL
     const { productId } = request.params
@@ -76,12 +74,12 @@ router.put('/:productId', async (request, response) => {
       : response.status(404).json({ msg: 'Error updating product' })
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
+    next(error)
   }
 })
 
 // Ruta para eliminar un producto
-router.delete('/:productId', async (request, response) => {
+router.delete('/:productId', async (request, response, next) => {
   try {
     // Extraer el ID del producto de los parámetros de URL
     const { productId } = request.params
@@ -93,7 +91,7 @@ router.delete('/:productId', async (request, response) => {
       : response.status(404).json({ msg: 'Error delete product' })
   } catch (error) {
     // Enviar respuesta de error con código de estado 500
-    response.status(500).json({ msg: error.message })
+    next(error)
   }
 })
 

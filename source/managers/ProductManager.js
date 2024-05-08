@@ -31,6 +31,7 @@ export default class ProductManager {
     try {
       const newProduct = {
         id: uuidv4(),
+        status: true,
         ...productData
       }
       const productList = await this.getProducts()
