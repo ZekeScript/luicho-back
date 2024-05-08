@@ -13,4 +13,16 @@ router.post('/', async (request, response) => {
   }
 })
 
+router.get('/:cartId', async (request, response) => {
+  try {
+    const { cartId } = request.params
+    const cartSearched = await cartManager.getCartById(cartId)
+    cartSearched
+      ? response.status(200).json(cartSearched)
+      : response.status(404).json({ msg: 'Cart not found' })
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 export default router

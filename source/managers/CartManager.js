@@ -38,4 +38,14 @@ export default class CartManager {
       console.log(error)
     }
   }
+
+  async getCartById (id) {
+    try {
+      const cartList = await this.getCarts()
+      const cartSearched = cartList.find(cartEntry => cartEntry.id === id)
+      return cartSearched || 'cart not found'
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
