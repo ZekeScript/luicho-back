@@ -1,5 +1,8 @@
 import { promises, existsSync } from 'fs'
 import { v4 as uuidv4 } from 'uuid'
+import { __dirname } from '../path.js'
+import ProductManager from './ProductManager.js'
+const productManager = new ProductManager(`${__dirname}/data/products.json`)
 
 export default class CartManager {
   constructor (path) {
@@ -43,7 +46,36 @@ export default class CartManager {
     try {
       const cartList = await this.getCarts()
       const cartSearched = cartList.find(cartEntry => cartEntry.id === id)
-      return cartSearched || 'cart not found'
+      if (!cartSearched) return null
+      return cartSearched
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async addToCart (idCart, idProduct) {
+    try {
+      const prodExist = await productManager.getProductById(idProduct)
+      if (!prodExist) console.log("this product doesn't exist")
+      const cartExist = await this.getCartById(idCart)
+      if (!cartExist) console.log("this cart doesn't exist")
+      const cartsFile = await this.getCarts()
+      const existProdInCart = cartExist.products.find(prod => prod.id === idProduct)
+      if (!existProdInCart) {
+        const product = {
+          id: idProduct,
+          quantity: 1
+        }
+        cartExist.products.push(product)
+      } else {
+        existProdInCart.quantity++
+      }
+      const updatedCarts = cartsFile.map((cart) => {
+        if (cart.id === idCart) return cartExist
+        return cart
+      })
+      await this.writeCarts(updatedCarts)
+      return cartExist
     } catch (error) {
       console.log(error)
     }

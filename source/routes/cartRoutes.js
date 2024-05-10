@@ -25,4 +25,15 @@ router.get('/:cartId', async (request, response) => {
   }
 })
 
+router.post('/:cartId/product/:productId', async (request, response, next) => {
+  try {
+    const { idCart } = request.params
+    const { idProd } = request.params
+    const cartUpdated = await cartManager.addToCart(idCart, idProd)
+    response.json(cartUpdated)
+  } catch (error) {
+    next(error)
+  }
+})
+
 export default router
