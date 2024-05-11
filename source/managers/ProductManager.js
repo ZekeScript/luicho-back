@@ -11,18 +11,17 @@ export default class ProductManager {
     try {
       await promises.writeFile(this.path, JSON.stringify(products))
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 
   // Devuelve todos los productos
   async getProducts () {
     try {
-      return existsSync(this.path)
-        ? JSON.parse(await promises.readFile(this.path, 'utf8'))
-        : []
+      if (existsSync(this.path)) return JSON.parse(await promises.readFile(this.path, 'utf8'))
+      else return []
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -35,6 +34,7 @@ export default class ProductManager {
         ...productData
       }
       const productList = await this.getProducts()
+
       // Evita la carga de productos con códigos duplicados
       if (productList.some((productEntry) => productEntry.code === newProduct.code)) {
         return 'Este producto ya existe'
@@ -44,7 +44,7 @@ export default class ProductManager {
         return newProduct
       }
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -52,10 +52,10 @@ export default class ProductManager {
   async getProductById (id) {
     try {
       const productList = await this.getProducts()
-      const productSearched = productList.find(productEntry => productEntry.id === id)
-      return productSearched || 'product not found'
+      const productSearched = productList.find(product => product.id === id)
+      return productSearched || null
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -69,7 +69,7 @@ export default class ProductManager {
       await this.writeProducts(productList)
       return productList[productIndex]
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 
@@ -80,13 +80,13 @@ export default class ProductManager {
       if (productList.length > 0) {
         const userExist = await this.getProductById(id)
         if (userExist) {
-          const newProductList = productList.filter(productEntry => productEntry.id !== id)
+          const newProductList = productList.filter(product => product.id !== id)
           await this.writeProducts(newProductList)
           return userExist
         }
       } else return null
     } catch (error) {
-      console.log(error)
+      throw new Error(error)
     }
   }
 }

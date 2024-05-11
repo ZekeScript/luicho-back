@@ -1,8 +1,8 @@
 import express from 'express'
-import cartRouter from './source/routes/cartRoutes.js'
-import productRouter from './source/routes/productRoutes.js'
-import { errorHandler } from './source/middlewares/errorHandler.js'
-import { __dirname } from './source/path.js'
+import cartRouter from './routes/cartRoutes.js'
+import productRouter from './routes/productRoutes.js'
+import { errorHandler } from './middlewares/errorHandler.js'
+import { __dirname } from './path.js'
 
 // Crear una instancia de Express
 const app = express()

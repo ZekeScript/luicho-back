@@ -2,10 +2,11 @@ import { Router } from 'express'
 import { __dirname } from '../path.js'
 import ProductManager from '../managers/ProductManager.js'
 import { productValidator } from '../middlewares/productValidator.js'
+const productManager = new ProductManager(`${__dirname}/data/products.json`)
+
 const router = Router()
 
 // Crear una instancia de ProductManager para gestionar los datos de productos
-const productManager = new ProductManager(`${__dirname}/data/products.json`)
 
 // Ruta para obtener un número limitado de productos
 router.get('/', async (request, response, next) => {
