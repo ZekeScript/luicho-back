@@ -8,7 +8,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/aros_acero_dorado.jpg"
   },
   {
     "id": "3adbbf5b-0585-41d6-83e7-5223494a1f22",
@@ -19,7 +19,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/aros_acero_dorado.jpg"
   },
   {
     "id": "bcfc356d-0021-4667-ba9f-8f08cf661b81",
@@ -30,7 +30,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/argollas_doble_dije_1%2C5cm.jpg"
   },
   {
     "id": "802affac-23a6-4828-a384-ac8a97b740bb",
@@ -41,7 +41,7 @@
     "status": true,
     "stock": 2,
     "category": "Pulseras",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/pulsera_con_dijes_perritos.jpg"
   },
   {
     "id": "a14a45f5-f4c7-4e9f-9c03-aabe0bb15512",
@@ -52,7 +52,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/aritos_argolla_con_dije_de_corazon_colgante.jpg"
   },
   {
     "id": "b8e17694-867f-4188-95f7-03de4f0b653f",
@@ -63,7 +63,7 @@
     "status": true,
     "stock": 2,
     "category": "Pulseras",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/pulsera_denario_22cm.jpg"
   },
   {
     "id": "03ccca6c-a799-4d0f-a9e0-acc90c8190f9",
@@ -74,7 +74,7 @@
     "status": true,
     "stock": 2,
     "category": "Cadenas",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/cadena_doble_dije.jpg"
   },
   {
     "id": "64e1c58c-393e-4e96-b5b5-dcec085e38c5",
@@ -85,7 +85,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/argollas_grandes_3%2C5cm_acero_dorado.jpg"
   },
   {
     "id": "87825e05-39bf-4381-bf5e-fb6ceaf0a712",
@@ -96,7 +96,7 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/aritos_de_strass.jpg"
   },
   {
     "id": "9daa6ce8-b777-4223-81e9-bfca35910a27",
@@ -107,6 +107,6 @@
     "status": true,
     "stock": 2,
     "category": "Aros",
-    "thumbnail": "Sin imagen"
+    "thumbnail": "https://raw.githubusercontent.com/ZekeScript/luicho-back/master/source/public/img/argollas_grandes_3%2C5cm_acero_dorado.jpg"
   }
 ]
