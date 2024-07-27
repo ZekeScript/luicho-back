@@ -5,6 +5,7 @@ import { errorHandler } from './middlewares/errorHandler.js'
 import { __dirname } from './path.js'
 import handlebars from 'express-handlebars'
 import viewsRouter from './routes/viewsRoutes.js'
+import { initMongoDB } from './data/database.js'
 
 // Crear una instancia de Express
 const app = express()
@@ -23,6 +24,8 @@ app.use('/api/products', productRouter)
 app.use('/', viewsRouter)
 
 app.use(errorHandler)
+
+initMongoDB()
 
 // Puerto en el que el servidor escucha las solicitudes
 const PORT = 8080
