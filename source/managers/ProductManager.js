@@ -1,4 +1,4 @@
-import { ProductModel } from '../models/product-model.js'
+import { ProductModel } from '../models/productModel.js'
 
 export default class ProductManager {
   // Devuelve todos los productos
@@ -13,8 +13,7 @@ export default class ProductManager {
   // Busca un producto por su ID
   async getById (id) {
     try {
-      const productSearched = await ProductModel.findById(id)
-      return productSearched || null
+      return await ProductModel.findById(id)
     } catch (error) {
       throw new Error(error)
     }

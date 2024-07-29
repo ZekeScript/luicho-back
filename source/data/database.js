@@ -1,4 +1,4 @@
-import connect from 'mongoose'
+import { connect } from 'mongoose'
 import 'dotenv/config'
 
 const MONGO_URL = process.env.MONGO_URL
