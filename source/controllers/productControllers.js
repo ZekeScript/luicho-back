@@ -4,8 +4,8 @@ const productManager = new ProductManager()
 
 export const getAllProducts = async (request, response, next) => {
   try {
-    const product = await productManager.getAll()
-    response.json(product)
+    const products = await productManager.getAll()
+    response.json(products)
   } catch (error) {
     next(error)
   }
@@ -15,10 +15,11 @@ export const getProductById = async (request, response, next) => {
   try {
     const { id } = request.params
     const product = await productManager.getById(id)
-    response.json(
-      product ||
-      { msg: 'Product not found' }
-    )
+    if (!product) {
+      response.json({ msg: 'Product not found' })
+    } else {
+      response.json(product)
+    }
   } catch (error) {
     next(error)
   }
@@ -27,7 +28,11 @@ export const getProductById = async (request, response, next) => {
 export const createProduct = async (request, response, next) => {
   try {
     const newProduct = await productManager.create(request.body)
-    response.json(newProduct || { msg: 'Error creating product' })
+    if (!newProduct) {
+      response.json({ msg: 'Error creating product' })
+    } else {
+      response.json(newProduct)
+    }
   } catch (error) {
     next(error)
   }
@@ -37,7 +42,11 @@ export const updateProduct = async (request, response, next) => {
   try {
     const { id } = request.params
     const prodUpdate = await productManager.update(id, request.body)
-    response.json(prodUpdate || { msg: 'Error updating product' })
+    if (!prodUpdate) {
+      response.json({ msg: 'Error updating product' })
+    } else {
+      response.json(prodUpdate)
+    }
   } catch (error) {
     next(error)
   }
@@ -47,7 +56,11 @@ export const deleteProduct = async (request, response, next) => {
   try {
     const { id } = request.params
     const prodDelete = await productManager.delete(id)
-    response.json(prodDelete || { msg: 'Error delete product' })
+    if (!prodDelete) {
+      response.json({ msg: 'Error delete product' })
+    } else {
+      response.json(prodDelete)
+    }
   } catch (error) {
     next(error)
   }
