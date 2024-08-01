@@ -1,67 +1,67 @@
-import ProductManager from '../managers/ProductManager.js'
+import ProductManager from '../manager/ProductManager.js'
 
 const productManager = new ProductManager()
 
-export const getAllProducts = async (request, response, next) => {
+export const getAllProducts = async (req, res, next) => {
   try {
     const products = await productManager.getAll()
-    response.json(products)
+    res.json(products)
   } catch (error) {
-    next(error)
+    next(error.msg)
   }
 }
 
-export const getProductById = async (request, response, next) => {
+export const getProductById = async (req, res, next) => {
   try {
-    const { id } = request.params
+    const { id } = req.params
     const product = await productManager.getById(id)
     if (!product) {
-      response.json({ msg: 'Product not found' })
+      res.status(404).json({ msg: 'Product not found' })
     } else {
-      response.json(product)
+      res.json(product)
     }
   } catch (error) {
-    next(error)
+    next(error.msg)
   }
 }
 
-export const createProduct = async (request, response, next) => {
+export const createProduct = async (req, res, next) => {
   try {
-    const newProduct = await productManager.create(request.body)
+    const newProduct = await productManager.create(req.body)
     if (!newProduct) {
-      response.json({ msg: 'Error creating product' })
+      res.status(404).json({ msg: 'Error creating product' })
     } else {
-      response.json(newProduct)
+      res.json(newProduct)
     }
   } catch (error) {
-    next(error)
+    next(error.msg)
   }
 }
 
-export const updateProduct = async (request, response, next) => {
+export const updateProduct = async (req, res, next) => {
   try {
-    const { id } = request.params
-    const prodUpdate = await productManager.update(id, request.body)
+    const { id } = req.params
+    const prodUpdate = await productManager.update(id, req.body)
     if (!prodUpdate) {
-      response.json({ msg: 'Error updating product' })
+      res.status(404).json({ msg: 'Error updating product' })
     } else {
-      response.json(prodUpdate)
+      res.json(prodUpdate)
     }
   } catch (error) {
-    next(error)
+    next(error.msg)
   }
 }
 
-export const deleteProduct = async (request, response, next) => {
+export const deleteProduct = async (req, res, next) => {
   try {
-    const { id } = request.params
+    const { id } = req.params
     const prodDelete = await productManager.delete(id)
     if (!prodDelete) {
-      response.json({ msg: 'Error delete product' })
+      res.status(404).json({ msg: 'Error delete product' })
     } else {
-      response.json(prodDelete)
+      res.json(prodDelete)
     }
   } catch (error) {
-    next(error)
+    next(error.msg)
   }
 }

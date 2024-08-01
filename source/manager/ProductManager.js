@@ -1,10 +1,11 @@
-import { ProductModel } from '../models/productModel.js'
+import { ProductModel } from '../../models/productModel.js'
 
 export default class ProductManager {
   // Devuelve todos los productos
   async getAll () {
     try {
-      return await ProductModel.find({})
+      const response = await ProductModel.find({})
+      return response
     } catch (error) {
       throw new Error(error)
     }
@@ -13,7 +14,8 @@ export default class ProductManager {
   // Busca un producto por su ID
   async getById (id) {
     try {
-      return await ProductModel.findById(id)
+      const response = await ProductModel.findById(id)
+      return response
     } catch (error) {
       throw new Error(error)
     }
@@ -23,7 +25,8 @@ export default class ProductManager {
   async create (productData) {
     try {
     // se necesita await??
-      return ProductModel.create(productData)
+      const response = ProductModel.create(productData)
+      return response
     } catch (error) {
       throw new Error(error)
     }
@@ -32,7 +35,8 @@ export default class ProductManager {
   // Modica un producto por su ID usando los datos de entrada
   async update (id, updatedFields) {
     try {
-      return await ProductModel.findByIdAndUpdate(id, updatedFields, { new: true })
+      const response = await ProductModel.findByIdAndUpdate(id, updatedFields, { new: true })
+      return response
     } catch (error) {
       throw new Error(error)
     }
@@ -41,7 +45,8 @@ export default class ProductManager {
   // Elimina un producto del array de productos usando su ID
   async delete (id) {
     try {
-      return await ProductModel.findByIdAndDelete(id)
+      const response = await ProductModel.findByIdAndDelete(id)
+      return response
     } catch (error) {
       throw new Error(error)
     }
